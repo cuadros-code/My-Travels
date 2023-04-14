@@ -11,33 +11,33 @@ export default function Auth() {
     <div class={`${styles.container} ${ styles[style()] }`}>
       <div class={`${styles['form-container']} ${styles['sign-up-container']}`}>
           <form action="#">
-              <h1>Create Account</h1>
-              <div class={`${styles["social-container"]}`}>
-                  <a href="#" class="social"><i class="fab fa-facebook-f"></i></a>
-                  <a href="#" class="social"><i class="fab fa-google-plus-g"></i></a>
-                  <a href="#" class="social"><i class="fab fa-linkedin-in"></i></a>
-              </div>
-              <span>or use your email for registration</span>
-              <input type="text" placeholder="Name" />
-              <input type="email" placeholder="Email" />
-              <input type="password" placeholder="Password" />
-              <Button >Sign Up</Button>
+              <h1 class={styles.title}>Creá tu cuenta</h1>
+              <input type="text" placeholder="Nombre completo" />
+              <input type="email" placeholder="Correo" />
+              <input type="password" placeholder="Contraseña" />
+              <Button>Crear cuenta</Button>
+              <Button class={styles.social} >
+                <img src="google.svg" alt="" />
+                <span>
+                  Regístrate con Google
+                </span>
+              </Button>
           </form>
       </div>
       <div 
         class={`${styles['form-container']} ${styles['log-in-container']}`}>
           <form action="#">
-              <h1>Log in</h1>
-              <div class={`${styles["social-container"]}`}>
-                  <a href="#" class="social"><i class="fab fa-facebook-f"></i></a>
-                  <a href="#" class="social"><i class="fab fa-google-plus-g"></i></a>
-                  <a href="#" class="social"><i class="fab fa-linkedin-in"></i></a>
-              </div>
-              <span>or use your account</span>
-              <input type="email" placeholder="Email" />
-              <input type="password" placeholder="Password" />
-              <a href="#">Forgot your password?</a>
-              <Button>Log In</Button>
+              <h1 class={styles.title}>Bienvenido</h1>
+              <input type="email" placeholder="Correo" />
+              <input type="password" placeholder="Contraseña" />
+              <a class={styles.link} href="#">¿Olvidaste tu contraseña?</a>
+              <Button>Iniciar Sesión</Button>
+              <Button class={styles.social} >
+                <img src="google.svg" alt="" />
+                <span>
+                  Inicia sesión con Google
+                </span>
+              </Button>
           </form>
       </div>
       <div class={styles['overlay-container']}>

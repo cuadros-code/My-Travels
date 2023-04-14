@@ -19,6 +19,22 @@ input {
     width: 100%;
 }
 
+.title{
+    font-family: 'Montserrat', sans-serif;
+    font-weight: bold;
+    font-size: 30px;
+    color: #0E1119;
+    margin: 15px 0;
+}
+
+.link {
+    font-size: 12px;
+    text-decoration: none;
+    margin: 15px 0;
+    text-align: left;
+    align-self: flex-start;
+}
+
 .container {
     background-color: #fff;
     border-radius: 10px;
@@ -145,20 +161,22 @@ input {
     transform: translateX(20%);
 }
 
-.social-container {
+.social {
     margin: 20px 0;
+    background-color: #eee;
+    color: #0E1119;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px 0px;
 }
 
-.social-container a {
-    border: 1px solid #DDDDDD;
-    border-radius: 50%;
-    display: inline-flex;
-    justify-content: center;
-    align-items: center;
-    margin: 0 5px;
-    height: 40px;
-    width: 40px;
+.social img {
+    width: 20px;
+    height: 20px;
+    margin: 0 10px;
 }
+
 
 .ghost {
     background-color: transparent;
