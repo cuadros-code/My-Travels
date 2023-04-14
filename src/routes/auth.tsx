@@ -1,16 +1,18 @@
 import { createSignal } from "solid-js";
-import '~/styles/auth.css'
+import { Button } from '~/components'
+import styles from '~/styles/auth.module.css'
 
-const [ style, setStyle ] = createSignal('');
 
 export default function Auth() {
+  
+  const [ style, setStyle ] = createSignal('');
 
   return (
-    <div class={`container ${style()}`}>
-      <div class="form-container sign-up-container">
+    <div class={`${styles.container} ${ styles[style()] }`}>
+      <div class={`${styles['form-container']} ${styles['sign-up-container']}`}>
           <form action="#">
               <h1>Create Account</h1>
-              <div class="social-container">
+              <div class={`${styles["social-container"]}`}>
                   <a href="#" class="social"><i class="fab fa-facebook-f"></i></a>
                   <a href="#" class="social"><i class="fab fa-google-plus-g"></i></a>
                   <a href="#" class="social"><i class="fab fa-linkedin-in"></i></a>
@@ -19,13 +21,14 @@ export default function Auth() {
               <input type="text" placeholder="Name" />
               <input type="email" placeholder="Email" />
               <input type="password" placeholder="Password" />
-              <button >Sign Up</button>
+              <Button >Sign Up</Button>
           </form>
       </div>
-      <div class="form-container log-in-container">
+      <div 
+        class={`${styles['form-container']} ${styles['log-in-container']}`}>
           <form action="#">
               <h1>Log in</h1>
-              <div class="social-container">
+              <div class={`${styles["social-container"]}`}>
                   <a href="#" class="social"><i class="fab fa-facebook-f"></i></a>
                   <a href="#" class="social"><i class="fab fa-google-plus-g"></i></a>
                   <a href="#" class="social"><i class="fab fa-linkedin-in"></i></a>
@@ -34,20 +37,20 @@ export default function Auth() {
               <input type="email" placeholder="Email" />
               <input type="password" placeholder="Password" />
               <a href="#">Forgot your password?</a>
-              <button>Log In</button>
+              <Button>Log In</Button>
           </form>
       </div>
-      <div class="overlay-container">
-          <div class="overlay">
-              <div class="overlay-panel overlay-left">
+      <div class={styles['overlay-container']}>
+          <div class={styles['overlay']}>
+              <div class={`${styles['overlay-panel']} ${styles['overlay-left']}`}>
                   <h1>Welcome Back!</h1>
                   <p>Already have an account? Log In</p>
-                  <button  onclick={() => setStyle('')} class="ghost" id="logIn">Log In</button>
+                  <Button onclick={() => setStyle('')} class={styles.ghost} id="logIn">Log In</Button>
               </div>
-              <div class="overlay-panel overlay-right">
+              <div class={`${styles['overlay-panel']} ${styles['overlay-right']}`}>
                   <h1>Hello, There!</h1>
                   <p>Don't have an account? Sign Up Free</p>
-                  <button onclick={() => setStyle('right-panel-active')} class="ghost" id="signUp">Sign Up</button>
+                  <Button onclick={() => setStyle('right-panel-active')} class={styles.ghost} id="signUp">Sign Up</Button>
               </div>
           </div>
       </div>
