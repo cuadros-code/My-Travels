@@ -35,6 +35,13 @@ input {
     align-self: flex-start;
 }
 
+.content{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 2rem;
+}
+
 .container {
     background-color: #fff;
     border-radius: 10px;
@@ -45,6 +52,7 @@ input {
     width: 768px;
     max-width: 100%;
     min-height: 480px;
+    align-self: flex-start;
 }
 
 .form-container {
@@ -109,9 +117,9 @@ input {
 }
 
 .overlay {
-    background: #FF416C;
-    background: linear-gradient(142.18deg, #3793FF 0%, #FE368A 98.85%);
-
+    /* background: #FF416C;
+    background: linear-gradient(142.18deg, #3793FF 0%, #FE368A 98.85%); */
+    background-image: url('green.webp');
 
     background-repeat: no-repeat;
     background-size: cover;
