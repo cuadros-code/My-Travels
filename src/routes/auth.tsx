@@ -1,12 +1,16 @@
 import { createSignal } from "solid-js";
-import { Button } from '~/components'
+import { Button, LoadingIndicator } from '~/components'
+import { authStore, signInWithGoogle } from "~/store/authStore";
 import styles from '~/styles/auth.module.css'
 
+const [ style, setStyle ] = createSignal('');
 
 export default function Auth() {
-  
-  const [ style, setStyle ] = createSignal('');
 
+  const onSignInWithGoogle = () => {
+    signInWithGoogle()
+  }
+  
   return (
     <div class={`${styles.container} ${ styles[style()] }`}>
       <div class={`${styles['form-container']} ${styles['sign-up-container']}`}>
@@ -17,26 +21,43 @@ export default function Auth() {
               <input type="password" placeholder="Contraseña" />
               <Button>Crear cuenta</Button>
               <Button class={styles.social} >
-                <img src="google.svg" alt="" />
-                <span>
-                  Regístrate con Google
-                </span>
+                {
+                  authStore.loading
+                  ? <LoadingIndicator></LoadingIndicator>
+                  : <>
+                      <img src="google.svg" alt="" />
+                      <span>
+                        Regístrate con Google
+                      </span>
+                    </>   
+                }
               </Button>
           </form>
       </div>
-      <div 
-        class={`${styles['form-container']} ${styles['log-in-container']}`}>
+      <div class={`${styles['form-container']} ${styles['log-in-container']}`}>
           <form action="#">
               <h1 class={styles.title}>Bienvenido</h1>
               <input type="email" placeholder="Correo" />
               <input type="password" placeholder="Contraseña" />
               <a class={styles.link} href="#">¿Olvidaste tu contraseña?</a>
               <Button>Iniciar Sesión</Button>
-              <Button class={styles.social} >
-                <img src="google.svg" alt="" />
-                <span>
-                  Inicia sesión con Google
-                </span>
+              <Button 
+                class={styles.social} 
+                onclick={onSignInWithGoogle}
+              >
+                <>
+                  {
+                    authStore.loading 
+                    ? <LoadingIndicator></LoadingIndicator>
+                    : <>
+                        <img src="google.svg" alt="" />
+                        <span>
+                          Inicia sesión con Google
+                        </span>
+                      </>
+                  }
+                </>
+
               </Button>
           </form>
       </div>

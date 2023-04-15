@@ -15,6 +15,7 @@ netlify
 .classpath
 *.launch
 .settings/
+.env
 
 # Temp
 gitignore

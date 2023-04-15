@@ -24,14 +24,14 @@ export default function Root() {
         <Meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
       <Body>
-        <Suspense>
-          <ErrorBoundary>
-            <Navbar />
-            <Routes>
-              <FileRoutes />
-            </Routes>
-          </ErrorBoundary>
-        </Suspense>
+          <Suspense>
+            <ErrorBoundary>
+              <Navbar />
+              <Routes>
+                  <FileRoutes />
+              </Routes>
+            </ErrorBoundary>
+          </Suspense>
         <Scripts />
       </Body>
     </Html>
