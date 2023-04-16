@@ -65,14 +65,26 @@ export default function Auth() {
         <div class={styles['overlay-container']}>
             <div class={styles['overlay']}>
                 <div class={`${styles['overlay-panel']} ${styles['overlay-left']}`}>
-                    <h1>Welcome Back!</h1>
-                    <p>Already have an account? Log In</p>
-                    <Button onclick={() => setStyle('')} class={styles.ghost} id="logIn">Log In</Button>
+                    <h1 class={styles['title-panel']}>Bienvenido</h1>
+                    <p class={styles['subtitle-panel']}>Si ya tienes una cuenta, inicia sesión</p>
+                    <Button 
+                      onclick={() => setStyle('')} 
+                      class={styles.ghost} 
+                    >
+                      Iniciar Sesión
+                    </Button>
                 </div>
                 <div class={`${styles['overlay-panel']} ${styles['overlay-right']}`}>
-                    <h1>Hello, There!</h1>
-                    <p>Don't have an account? Sign Up Free</p>
-                    <Button onclick={() => setStyle('right-panel-active')} class={styles.ghost} id="signUp">Sign Up</Button>
+                    <h1 class={styles['title-panel']}>Hola</h1>
+                    <p class={styles['subtitle-panel']}>
+                      Todavía no tienes una cuenta? Registrate
+                    </p>
+                    <Button 
+                      onclick={() => setStyle('right-panel-active')} 
+                      class={styles.ghost} 
+                    >
+                      Registrate
+                    </Button>
                 </div>
             </div>
         </div>
