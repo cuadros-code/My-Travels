@@ -117,7 +117,7 @@ input {
 }
 
 .overlay {
-    background-image: url('green.webp');    
+    background-image: url('../../public/green.webp');    
     background-repeat: no-repeat;
     background-size: cover;
     background-position: 0 0;
