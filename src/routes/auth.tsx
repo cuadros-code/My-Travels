@@ -1,11 +1,19 @@
 import { createSignal } from "solid-js";
 import { Button, LoadingIndicator } from '~/components'
 import { authStore, signInWithGoogle } from "~/store/authStore";
+import { createForm, Form, Field, required, email, minLength } from '@modular-forms/solid';
 import styles from '~/styles/auth.module.css'
 
 const [ style, setStyle ] = createSignal('');
 
+type LoginForm = {
+  email: string;
+  password: string;
+}
+
 export default function Auth() {
+
+  const loginForm = createForm<LoginForm>();
 
   const onSignInWithGoogle = () => {
     signInWithGoogle()
@@ -15,13 +23,16 @@ export default function Auth() {
     <div class={styles.content}>
       <div class={`${styles.container} ${ styles[style()] }`}>
         <div class={`${styles['form-container']} ${styles['sign-up-container']}`}>
-            <form action="#">
-                <h1 class={styles.title}>Creá tu cuenta</h1>
+            <Form of={loginForm} onSubmit={() => {}}>
+              <h1 class={styles.title}>Creá tu cuenta</h1>
                 <input type="text" placeholder="Nombre completo" />
                 <input type="email" placeholder="Correo" />
                 <input type="password" placeholder="Contraseña" />
                 <Button>Crear cuenta</Button>
-                <Button class={styles.social} >
+                <Button 
+                  class={styles.social} 
+                  onclick={onSignInWithGoogle}
+                >
                   {
                     authStore.loading
                     ? <LoadingIndicator></LoadingIndicator>
@@ -33,18 +44,47 @@ export default function Auth() {
                       </>   
                   }
                 </Button>
-            </form>
+            </Form>
         </div>
         <div class={`${styles['form-container']} ${styles['log-in-container']}`}>
-            <form action="#">
+            <Form of={loginForm} onSubmit={() => {}} >
                 <h1 class={styles.title}>Bienvenido</h1>
-                <input type="email" placeholder="Correo" />
-                <input type="password" placeholder="Contraseña" />
+                <Field
+                  of={loginForm}
+                  name="email"
+                  validate={[
+                    required('Please enter your email.'),
+                    email('The email address is badly formatted.'),
+                  ]}
+                >
+                  {(field) => (
+                    <>
+                      <input {...field.props} type="email" placeholder="Correo" required />
+                      {field.error && <div>{field.error}</div>}
+                    </>
+                  )}
+                </Field>
+                <Field
+                  of={loginForm}
+                  name="password"
+                  validate={[
+                    required('Please enter your password.'),
+                    minLength(8, 'You password must have 8 characters or more.'),
+                  ]}
+                >
+                  {(field) => (
+                    <>
+                      <input {...field.props} type="password" placeholder="Contraseña" required />
+                      {field.error && <div>{field.error}</div>}
+                    </>
+                  )}
+                </Field>
                 <a class={styles.link} href="#">¿Olvidaste tu contraseña?</a>
-                <Button>Iniciar Sesión</Button>
+                <Button type="submit">Iniciar Sesión</Button>
                 <Button 
                   class={styles.social} 
                   onclick={onSignInWithGoogle}
+                  type="button"
                 >
                   <>
                     {
@@ -58,9 +98,8 @@ export default function Auth() {
                         </>
                     }
                   </>
-
                 </Button>
-            </form>
+            </Form>
         </div>
         <div class={styles['overlay-container']}>
             <div class={styles['overlay']}>
