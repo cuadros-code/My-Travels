@@ -1,5 +1,7 @@
 import { createSignal } from "solid-js";
 import { useLocation, A } from "solid-start";
+import { Button } from "~/components";
+import { authStore, signOutSession } from "~/store/authStore";
 
 const Navbar = () => {
 
@@ -22,6 +24,12 @@ const Navbar = () => {
           <A href="/about">About</A>
         </li>
       </ul>
+      {
+        authStore.user &&
+          <Button onclick={signOutSession}>
+            Cerrar Sesión
+          </Button>
+      }
     </nav>
   );
 }

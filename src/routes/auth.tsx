@@ -6,11 +6,6 @@ import styles from '~/styles/auth.module.css'
 
 const [ style, setStyle ] = createSignal('');
 
-type LoginForm = {
-  email: string;
-  password: string;
-}
-
 export default function Auth() {
 
   const loginForm = createForm<LoginForm>();

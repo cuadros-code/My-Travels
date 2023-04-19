@@ -2,8 +2,8 @@
   color: official;
   display: inline-block;
   position: relative;
-  width: 80px;
-  height: 80px;
+  width: 25px;
+  height: 25px;
 }
 .lds-spinner div {
   transform-origin: 40px 40px;
