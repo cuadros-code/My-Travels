@@ -3,12 +3,22 @@ import { Button, LoadingIndicator } from '~/components'
 import { authStore, signInWithGoogle } from "~/store/authStore";
 import { createForm, Form, Field, required, email, minLength } from '@modular-forms/solid';
 import styles from '~/styles/auth.module.css'
+import { LoginForm, RegisterForm } from "~/interfaces/auth.interfaces";
 
 const [ style, setStyle ] = createSignal('');
 
 export default function Auth() {
 
   const loginForm = createForm<LoginForm>();
+  const registerForm = createForm<RegisterForm>();
+
+  const onLogin = (data: LoginForm) => {
+    console.log(data);
+  }
+
+  const onRegister = (data: RegisterForm) => {
+    console.log(data);
+  }
 
   const onSignInWithGoogle = () => {
     signInWithGoogle()
@@ -18,12 +28,53 @@ export default function Auth() {
     <div class={styles.content}>
       <div class={`${styles.container} ${ styles[style()] }`}>
         <div class={`${styles['form-container']} ${styles['sign-up-container']}`}>
-            <Form of={loginForm} onSubmit={() => {}}>
+            <Form of={registerForm} onSubmit={onRegister}>
               <h1 class={styles.title}>Creá tu cuenta</h1>
-                <input type="text" placeholder="Nombre completo" />
-                <input type="email" placeholder="Correo" />
-                <input type="password" placeholder="Contraseña" />
-                <Button>Crear cuenta</Button>
+              <Field
+                of={registerForm}
+                name="name"
+                validate={[
+                  required('Por favor ingresa tu nombre'),
+                ]}
+              >
+                {(field) => (
+                  <>
+                    <input {...field.props} type="text" placeholder="Nombre completo" required />
+                    {field.error && <div>{field.error}</div>}
+                  </>
+                )}
+              </Field>
+              <Field
+                  of={registerForm}
+                  name="email"
+                  validate={[
+                    required('Por favor ingresa su correo.'),
+                    email('El correo ingresado no es válido.'),
+                  ]}
+                >
+                  {(field) => (
+                    <>
+                      <input {...field.props} type="email" placeholder="Correo" required />
+                      {field.error && <div>{field.error}</div>}
+                    </>
+                  )}
+                </Field>
+                <Field
+                  of={registerForm}
+                  name="password"
+                  validate={[
+                    required('Por favor ingresa tu contraseña.'),
+                    minLength(8, 'La contraseña debe tener 8 caracteres o más.'),
+                  ]}
+                >
+                  {(field) => (
+                    <>
+                      <input {...field.props} type="password" placeholder="Contraseña" required />
+                      {field.error && <div>{field.error}</div>}
+                    </>
+                  )}
+                </Field>
+                <Button type="submit">Crear cuenta</Button>
                 <Button 
                   class={styles.social} 
                   onclick={onSignInWithGoogle}
@@ -42,14 +93,14 @@ export default function Auth() {
             </Form>
         </div>
         <div class={`${styles['form-container']} ${styles['log-in-container']}`}>
-            <Form of={loginForm} onSubmit={() => {}} >
+            <Form of={loginForm} onSubmit={onLogin} >
                 <h1 class={styles.title}>Bienvenido</h1>
                 <Field
                   of={loginForm}
                   name="email"
                   validate={[
-                    required('Please enter your email.'),
-                    email('The email address is badly formatted.'),
+                    required('Por favor ingresa su correo.'),
+                    email('El correo ingresado no es válido.'),
                   ]}
                 >
                   {(field) => (
@@ -63,8 +114,8 @@ export default function Auth() {
                   of={loginForm}
                   name="password"
                   validate={[
-                    required('Please enter your password.'),
-                    minLength(8, 'You password must have 8 characters or more.'),
+                    required('Por favor ingresa tu contraseña.'),
+                    minLength(8, 'La contraseña debe tener 8 caracteres o más.'),
                   ]}
                 >
                   {(field) => (
