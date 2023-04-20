@@ -1,6 +1,7 @@
 .button {
   width: 100%;
   border-radius: 8px;
+  max-height: 50px !important;
   border: none;
   background-color: #457b09;
   color: #FFFFFF;

@@ -1,5 +1,5 @@
 import { createSignal } from "solid-js";
-import { Button, LoadingIndicator } from '~/components'
+import { Button, Input, LoadingIndicator } from '~/components'
 import { authStore, signInWithGoogle } from "~/store/authStore";
 import { createForm, Form, Field, required, email, minLength } from '@modular-forms/solid';
 import styles from '~/styles/auth.module.css'
@@ -28,103 +28,93 @@ export default function Auth() {
     <div class={styles.content}>
       <div class={`${styles.container} ${ styles[style()] }`}>
         <div class={`${styles['form-container']} ${styles['sign-up-container']}`}>
-            <Form of={registerForm} onSubmit={onRegister}>
+            <Form 
+              of={registerForm} 
+              onSubmit={onRegister} 
+              autocomplete="off"
+              class={styles.form}
+            >
               <h1 class={styles.title}>Creá tu cuenta</h1>
-              <Field
+              <Input
                 of={registerForm}
+                type="text" 
+                placeholder="Nombre completo" 
+                required
                 name="name"
                 validate={[
                   required('Por favor ingresa tu nombre'),
                 ]}
+              />
+              <Input
+                of={registerForm}
+                type="email"
+                placeholder="Correo electrónico"
+                required
+                name="email"
+                validate={[
+                  required('Por favor ingresa tu correo.'),
+                  email('El correo ingresado no es válido.'),
+                ]}
+              />
+              <Input
+                of={registerForm}
+                type="password"
+                placeholder="Contraseña"
+                required
+                name="password"
+                validate={[
+                  required('Por favor ingresa tu contraseña.'),
+                  minLength(8, 'La contraseña debe tener 8 caracteres o más.'),
+                ]}
+              />
+              <Button type="submit">Crear cuenta</Button>
+              <Button 
+                class={styles.social} 
+                onclick={onSignInWithGoogle}
               >
-                {(field) => (
-                  <>
-                    <input {...field.props} type="text" placeholder="Nombre completo" required />
-                    {field.error && <div>{field.error}</div>}
-                  </>
-                )}
-              </Field>
-              <Field
-                  of={registerForm}
-                  name="email"
-                  validate={[
-                    required('Por favor ingresa su correo.'),
-                    email('El correo ingresado no es válido.'),
-                  ]}
-                >
-                  {(field) => (
-                    <>
-                      <input {...field.props} type="email" placeholder="Correo" required />
-                      {field.error && <div>{field.error}</div>}
-                    </>
-                  )}
-                </Field>
-                <Field
-                  of={registerForm}
-                  name="password"
-                  validate={[
-                    required('Por favor ingresa tu contraseña.'),
-                    minLength(8, 'La contraseña debe tener 8 caracteres o más.'),
-                  ]}
-                >
-                  {(field) => (
-                    <>
-                      <input {...field.props} type="password" placeholder="Contraseña" required />
-                      {field.error && <div>{field.error}</div>}
-                    </>
-                  )}
-                </Field>
-                <Button type="submit">Crear cuenta</Button>
-                <Button 
-                  class={styles.social} 
-                  onclick={onSignInWithGoogle}
-                >
-                  {
-                    authStore.loading
-                    ? <LoadingIndicator></LoadingIndicator>
-                    : <>
-                        <img src="google.svg" alt="" />
-                        <span>
-                          Regístrate con Google
-                        </span>
-                      </>   
-                  }
-                </Button>
+                {
+                  authStore.loading
+                  ? <LoadingIndicator></LoadingIndicator>
+                  : <>
+                      <img src="google.svg" alt="" />
+                      <span>
+                        Regístrate con Google
+                      </span>
+                    </>   
+                }
+              </Button>
             </Form>
         </div>
         <div class={`${styles['form-container']} ${styles['log-in-container']}`}>
-            <Form of={loginForm} onSubmit={onLogin} >
+            <Form 
+              of={loginForm} 
+              onSubmit={onLogin} 
+              autocomplete="off" 
+              class={styles.form}
+            >
                 <h1 class={styles.title}>Bienvenido</h1>
-                <Field
+                <Input
                   of={loginForm}
+                  type="email"
+                  placeholder="Correo electrónico"
+                  required
                   name="email"
                   validate={[
-                    required('Por favor ingresa su correo.'),
+                    required('Por favor ingresa tu correo.'),
                     email('El correo ingresado no es válido.'),
                   ]}
-                >
-                  {(field) => (
-                    <>
-                      <input {...field.props} type="email" placeholder="Correo" required />
-                      {field.error && <div>{field.error}</div>}
-                    </>
-                  )}
-                </Field>
-                <Field
+                />
+                <Input
                   of={loginForm}
+                  type="password"
+                  placeholder="Contraseña"
+                  required
                   name="password"
                   validate={[
                     required('Por favor ingresa tu contraseña.'),
                     minLength(8, 'La contraseña debe tener 8 caracteres o más.'),
                   ]}
-                >
-                  {(field) => (
-                    <>
-                      <input {...field.props} type="password" placeholder="Contraseña" required />
-                      {field.error && <div>{field.error}</div>}
-                    </>
-                  )}
-                </Field>
+                />
                 <a class={styles.link} href="#">¿Olvidaste tu contraseña?</a>
                 <Button type="submit">Iniciar Sesión</Button>
                 <Button 
