@@ -1,11 +1,16 @@
 import { FirebaseError } from "firebase/app";
 import { 
-  getAuth, 
-  signInWithPopup, 
-  GoogleAuthProvider, signOut, createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
+    getAuth, 
+    signInWithPopup, 
+    GoogleAuthProvider, 
+    signOut, 
+    createUserWithEmailAndPassword, 
+    updateProfile, 
+    signInWithEmailAndPassword
+  } from "firebase/auth";
 import { createStore } from "solid-js/store";
 import { googleProvider } from "~/config/firebase";
-import { AuthProps, RegisterForm } from "~/interfaces/auth.interfaces";
+import { AuthProps, LoginForm, RegisterForm } from "~/interfaces/auth.interfaces";
 
 
 export const [authStore, setAuthStore] = createStore<AuthProps>({
@@ -44,6 +49,20 @@ export const registerUser = async ({ name, email, password }: RegisterForm ) => 
     }
     setAuthStore({ user })
 
+  } catch (errors) {
+    let error = errors as FirebaseError
+    setAuthStore({ error })
+  } finally {
+    setAuthStore({loading: false})
+  }
+}
+
+export const signInUser = async ({ email, password }: LoginForm ) => {
+  try {
+    const auth = getAuth()
+    const userCredential = await signInWithEmailAndPassword(auth, email, password)
+    const user = userCredential.user
+    setAuthStore({ user })
   } catch (errors) {
     let error = errors as FirebaseError
     setAuthStore({ error })

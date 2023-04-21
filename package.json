@@ -15,7 +15,7 @@
     "vite": "^4.1.4"
   },
   "dependencies": {
-    "@modular-forms/solid": "^0.11.0",
+    "@modular-forms/solid": "^0.12.0",
     "@solidjs/meta": "^0.28.2",
     "@solidjs/router": "^0.8.2",
     "firebase": "^9.19.1",

@@ -1,29 +1,39 @@
-import { JSX } from 'solid-js';
+import { JSX, createMemo, splitProps } from 'solid-js';
 import styles from './Input.module.css'
-import { Field, FieldValue, FieldValues, FormState, Maybe, ValidateField } from '@modular-forms/solid';
 
 interface InputProps extends JSX.InputHTMLAttributes<HTMLInputElement> {
-  validate ?: ValidateField<Maybe<any | any | any[] | any[]>> 
-            | ValidateField<Maybe<any | any | any[] | any[]>>[] 
-            | undefined,
-  of        : FormState<any>
-  name      : string
+  error?: string;
+  value: string | number | undefined;
 }
 
-const Input = ({ name, of, validate ,...rest }: InputProps) => {
+const Input = ( props: InputProps) => {
+
+  const [, inputProps] = splitProps(props, [
+    'class',
+    'value',
+    'error',
+  ]);
+
+  const getValue = createMemo<string | number | undefined>(
+    (prevValue) =>
+      props.value === undefined
+        ? ''
+        : !Number.isNaN(props.value)
+        ? props.value
+        : prevValue,
+    ''
+  );
+
   return (
-    <Field
-      of={of}
-      name={name}
-      validate={validate}
-    >
-      {(field) => (
-        <>
-          <input class={styles.input} {...field.props} {...rest} />
-          {field.error && <div class={styles['message-error']}>{field.error}</div>}
-        </>
-      )}
-    </Field>
+    <>
+      <input
+        {...inputProps}
+        class={styles.input} 
+        id={props.name}
+        value={getValue()}
+      />
+      {props.error && <div class={styles['message-error']}>{props.error}</div>}
+    </>
   );
 }
 
