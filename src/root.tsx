@@ -12,7 +12,7 @@ import {
   Title,
 } from "solid-start";
 import "./root.css";
-import { Navbar } from "~/components";
+import { Alert, Navbar } from "~/components";
 import { authListener } from '~/store/authStore';
 
 export default function Root() {
@@ -29,6 +29,7 @@ export default function Root() {
         <Meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
       <Body>
+        <Alert />
           <Suspense>
             <ErrorBoundary>
               <Navbar />
