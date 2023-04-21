@@ -6,12 +6,14 @@ import {
     signOut, 
     createUserWithEmailAndPassword, 
     updateProfile, 
-    signInWithEmailAndPassword
+    signInWithEmailAndPassword,
+    onAuthStateChanged
   } from "firebase/auth";
 import { createStore } from "solid-js/store";
 import { googleProvider } from "~/config/firebase";
 import { AuthProps, LoginForm, RegisterForm } from "~/interfaces/auth.interfaces";
 
+const auth = getAuth()
 
 export const [authStore, setAuthStore] = createStore<AuthProps>({
   user    : null,
@@ -23,7 +25,6 @@ export const [authStore, setAuthStore] = createStore<AuthProps>({
 export const signInWithGoogle = async () => {
   try {
     setAuthStore({loading: true})
-    const auth = getAuth()
     const signPopup = await signInWithPopup(auth, googleProvider)
     const credential = GoogleAuthProvider.credentialFromResult(signPopup)
     const token = credential?.accessToken
@@ -41,7 +42,6 @@ export const signInWithGoogle = async () => {
 
 export const registerUser = async ({ name, email, password }: RegisterForm ) => {
   try {
-    const auth = getAuth()
     const userCredential = await createUserWithEmailAndPassword(auth, email, password)
     const user = userCredential.user
     if( auth.currentUser ){
@@ -59,7 +59,6 @@ export const registerUser = async ({ name, email, password }: RegisterForm ) => 
 
 export const signInUser = async ({ email, password }: LoginForm ) => {
   try {
-    const auth = getAuth()
     const userCredential = await signInWithEmailAndPassword(auth, email, password)
     const user = userCredential.user
     setAuthStore({ user })
@@ -71,10 +70,8 @@ export const signInUser = async ({ email, password }: LoginForm ) => {
   }
 }
 
-
 export const signOutSession = async () => {
   try {
-    const auth = getAuth()
     await signOut(auth)
     setAuthStore({
       user    : null,
@@ -90,4 +87,14 @@ export const signOutSession = async () => {
   } finally {
     setAuthStore({loading: false})
   }
+}
+
+export const authListener = () => {
+  onAuthStateChanged(auth, (user) => {
+    if (user) {
+      setAuthStore({ user })
+    } else {
+      setAuthStore({ user: null })
+    }
+  })
 }

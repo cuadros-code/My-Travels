@@ -1,5 +1,5 @@
 // @refresh reload
-import { Suspense } from "solid-js";
+import { Suspense, createEffect } from "solid-js";
 import {
   Body,
   ErrorBoundary,
@@ -13,8 +13,13 @@ import {
 } from "solid-start";
 import "./root.css";
 import { Navbar } from "~/components";
+import { authListener } from '~/store/authStore';
 
 export default function Root() {
+
+  createEffect(() => {
+    authListener()
+  })
   
   return (
     <Html lang="en">
