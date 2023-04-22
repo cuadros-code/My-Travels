@@ -1,38 +1,53 @@
 import { createStore } from 'solid-js/store';
 import styles from './Alert.module.css'
+import { Show, createEffect, onCleanup } from 'solid-js';
 
 export const [alert, setAlertState] = createStore({
   open: false,
   message: 'Error',
-  description: 'El usuario o la contraseña son incorrectos',
-  type: 'info' as 'success' | 'error' | 'warning' | 'info',
+  description: 'Error description here',
+  type: 'success' as 'success' | 'error' | 'warning' | 'info',
 });
 
 const Alert = () => {
 
+  createEffect(() => {
+    if (alert.open) {
+      const interval = setTimeout(() => {
+        setAlertState({ open: false });
+      }, 5000);
+
+      onCleanup(() => {
+        clearTimeout(interval);
+      });
+    }
+  });
+
   return (
-    <div 
-      role="alert"
-      class={`${styles.alert} ${styles[`alert-${alert.type}`]}`} 
-    >
-      <button 
-        class={`${styles.button} ${styles[`button-${alert.type}`]}`}
+    <Show when={alert.open === true} fallback={<></>}>
+      <div 
+        role="alert"
+        class={`${styles.alert} ${styles[`alert-${alert.type}`]}`} 
       >
-        <img src={`${alert.type}.svg`} alt="" />
-      </button>
-      <div>
-        <h3 
-          class={`${styles.title} ${styles[`title-${alert.type}`]}`}
+        <button 
+          class={`${styles.button} ${styles[`button-${alert.type}`]}`}
         >
-          {alert.message}
-        </h3>
-        <p 
-          class={`${styles.description} ${styles[`description-${alert.type}`]}`}
-        >
-          {alert.description}
-        </p>
+          <img src={`${alert.type}.svg`} alt="" />
+        </button>
+        <div>
+          <h3 
+            class={`${styles.title} ${styles[`title-${alert.type}`]}`}
+          >
+            {alert.message}
+          </h3>
+          <p 
+            class={`${styles.description} ${styles[`description-${alert.type}`]}`}
+          >
+            {alert.description}
+          </p>
+        </div>
       </div>
-    </div>
+    </Show>
   )
 }
 

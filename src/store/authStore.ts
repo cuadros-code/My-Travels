@@ -10,8 +10,10 @@ import {
     onAuthStateChanged
   } from "firebase/auth";
 import { createStore } from "solid-js/store";
+import { setAlertState } from "~/components/alert/Alert";
 import { googleProvider } from "~/config/firebase";
 import { AuthProps, LoginForm, RegisterForm } from "~/interfaces/auth.interfaces";
+import { authErrorMessages } from "~/utils/authMessages";
 
 const auth = getAuth()
 
@@ -34,7 +36,7 @@ export const signInWithGoogle = async () => {
   } catch (errors) {
     let error = errors as FirebaseError
     setAuthStore({ error})
-    
+    callAlert(error)
   } finally {
     setAuthStore({loading: false})
   }
@@ -52,6 +54,7 @@ export const registerUser = async ({ name, email, password }: RegisterForm ) => 
   } catch (errors) {
     let error = errors as FirebaseError
     setAuthStore({ error })
+    callAlert(error)
   } finally {
     setAuthStore({loading: false})
   }
@@ -65,6 +68,7 @@ export const signInUser = async ({ email, password }: LoginForm ) => {
   } catch (errors) {
     let error = errors as FirebaseError
     setAuthStore({ error })
+    callAlert(error)
   } finally {
     setAuthStore({loading: false})
   }
@@ -83,7 +87,7 @@ export const signOutSession = async () => {
   } catch (errors) {
     let error = errors as FirebaseError
     setAuthStore({ error})
-
+    callAlert(error)
   } finally {
     setAuthStore({loading: false})
   }
@@ -96,5 +100,14 @@ export const authListener = () => {
     } else {
       setAuthStore({ user: null })
     }
+  })
+}
+
+const callAlert = ( error: FirebaseError ) => {
+  setAlertState({
+    description: authErrorMessages[error.code] || 'Error desconocido',
+    message    : 'Error',
+    open       : true,
+    type: 'error',
   })
 }
