@@ -23,6 +23,9 @@ const Navbar = () => {
         <li class={`border-b-2 ${active("/about")} mx-1.5 sm:mx-6`}>
           <A href="/about">About</A>
         </li>
+        <li class={`border-b-2 ${active("/profile")} mx-1.5 sm:mx-6`}>
+          <A href="/profile">Profile</A>
+        </li>
       </ul>
       {
         authStore.user &&

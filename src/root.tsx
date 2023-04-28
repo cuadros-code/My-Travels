@@ -10,16 +10,24 @@ import {
   Routes,
   Scripts,
   Title,
+  useNavigate,
 } from "solid-start";
 import "./root.css";
 import { Alert, Navbar } from "~/components";
 import { authListener } from '~/store/authStore';
 
-export default function Root() {
 
+export default function Root() {
+  
+  const navigate = useNavigate();
+  
   createEffect(() => {
     authListener()
   })
+
+  console.log({navigate});
+  
+
   
   return (
     <Html lang="en">
