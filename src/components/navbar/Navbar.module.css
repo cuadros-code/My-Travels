@@ -1,0 +1,15 @@
+.nav{
+  padding: 10px 25px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.links{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.link{
+  margin-right: 35px;
+}

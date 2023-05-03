@@ -1,38 +1,53 @@
 import { createSignal } from "solid-js";
-import { useLocation, A } from "solid-start";
+import { useLocation, A, useNavigate } from "solid-start";
 import { Button } from "~/components";
 import { authStore, signOutSession } from "~/store/authStore";
+import styles from  './Navbar.module.css'
 
 const Navbar = () => {
 
-  const [count, setCount] = createSignal(0);
-  const location = useLocation();
+  const [isOpen, setIsOpen] = createSignal(false);
+  const navigate = useNavigate()
 
-
-  const active = (path: string) =>
-    path == location.pathname
-      ? "border-sky-600"
-      : "border-transparent hover:border-sky-600";
+  const toggleNav = () => {
+    setIsOpen(!isOpen);
+  };
 
   return (
-    <nav class="bg-sky-800">
-      <ul class="container flex items-center p-3 text-gray-200">
-        <li class={`border-b-2 ${active("/")} mx-1.5 sm:mx-6`}>
-          <A href="/">Home</A>
+    <nav class={styles.nav}>
+      <div class={styles.logo}>
+        <A href="/">Logo</A>
+      </div>
+      <ul class={styles.links}>
+        <li class={styles.link}>
+          <A href="/">Inicio</A>
         </li>
-        <li class={`border-b-2 ${active("/about")} mx-1.5 sm:mx-6`}>
-          <A href="/about">About</A>
+        <li class={styles.link}>
+          <A href="/">Publicar</A>
         </li>
-        <li class={`border-b-2 ${active("/profile")} mx-1.5 sm:mx-6`}>
-          <A href="/profile">Profile</A>
+        <li class={styles.link}>
+          <A href="/">Contacto</A>
         </li>
+        {
+          authStore.user ? 
+          <>
+            <li class={styles.link}>
+              <A href="/">Perfil</A>
+            </li>
+            <li>
+              <Button onclick={signOutSession} >Cerrar sesion</Button>
+            </li>
+          </>
+          :
+          <>
+            <li>
+              <Button onclick={() => navigate('/auth')}>
+                Iniciar sesion
+              </Button>
+            </li>
+          </>
+        }
       </ul>
-      {
-        authStore.user &&
-          <Button onclick={signOutSession}>
-            Cerrar Sesión
-          </Button>
-      }
     </nav>
   );
 }
