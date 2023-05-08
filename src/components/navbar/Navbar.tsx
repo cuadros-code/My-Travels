@@ -22,6 +22,7 @@ const Navbar = () => {
       <div class={styles.logo}>
         <A href="/">
           <img src="logo.png" alt="" />
+          <h1>HuellasAmigas</h1>
         </A>
       </div>
       <ul class={styles.links}>

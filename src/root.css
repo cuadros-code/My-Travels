@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+*{
+  font-family: 'Comme', sans-serif;
+}
+
 :root {
   --primary-color: #fece01;
 }
