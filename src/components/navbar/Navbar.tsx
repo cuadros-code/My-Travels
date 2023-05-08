@@ -9,6 +9,10 @@ const Navbar = () => {
   const [isOpen, setIsOpen] = createSignal(false);
   const navigate = useNavigate()
 
+  const location = useLocation();
+  const active = (path: string) => path == location.pathname && "active-route"
+  
+
   const toggleNav = () => {
     setIsOpen(!isOpen);
   };
@@ -16,23 +20,29 @@ const Navbar = () => {
   return (
     <nav class={styles.nav}>
       <div class={styles.logo}>
-        <A href="/">Logo</A>
+        <A href="/">
+          <img src="logo.png" alt="" />
+        </A>
       </div>
       <ul class={styles.links}>
-        <li class={styles.link}>
+        <li class={`${styles.link} ${active('/')}`}>
           <A href="/">Inicio</A>
+          <span></span>
         </li>
         <li class={styles.link}>
           <A href="/">Publicar</A>
+          <span></span>
         </li>
         <li class={styles.link}>
           <A href="/">Contacto</A>
+          <span></span>
         </li>
         {
           authStore.user ? 
           <>
-            <li class={styles.link}>
-              <A href="/">Perfil</A>
+            <li class={`${styles.link} ${active('/profile')}`}>
+              <A href="/profile">Perfil</A>
+              <span></span>
             </li>
             <li>
               <Button onclick={signOutSession} >Cerrar sesion</Button>

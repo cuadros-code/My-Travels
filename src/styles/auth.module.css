@@ -106,7 +106,7 @@
 }
 
 .overlay {
-    background-image: url('../../public/green.webp');    
+    background-image: url('../../public/auth.png');    
     background-repeat: no-repeat;
     background-size: cover;
     background-position: 0 0;
@@ -126,7 +126,7 @@
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: rgba(0, 0, 0, 0.2);
+    background-color: rgba(0, 0, 0, 0.4);
   }
 
 .container.right-panel-active .overlay {
@@ -194,10 +194,6 @@
 }
 
 .ghost {
-    background-color: white;
-    border: 1px solid #FFFFFF;   
-    transition: 0.5s;
-    color: #0E1119;
     margin-top: 15px;
     width: 50%;
     padding: 12px 0px;

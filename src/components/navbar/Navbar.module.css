@@ -12,4 +12,11 @@
 
 .link{
   margin-right: 35px;
+  position: relative;
+}
+
+.logo {
+  max-width: 70px;
+  display: flex;
+  align-items: center;
 }

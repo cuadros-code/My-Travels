@@ -3,7 +3,7 @@
   border-radius: 8px;
   max-height: 50px !important;
   border: none;
-  background-color: #457b09;
+  background-color: var(--primary-color);
   color: #FFFFFF;
   font-size: 12px;
   font-weight: bold;
